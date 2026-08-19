@@ -120,7 +120,7 @@ model Session {
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([token])
-  @@index([userId(length: 191)])
+  @@index([userId])
   @@map("session")
 }
 
@@ -142,7 +142,7 @@ model Account {
   updatedAt             DateTime  @updatedAt
 
   @@unique([issuer(length: 191), accountId(length: 191)])
-  @@index([userId(length: 191)])
+  @@index([userId])
   @@map("account")
 }
 
