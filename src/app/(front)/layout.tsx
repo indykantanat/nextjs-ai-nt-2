@@ -64,7 +64,9 @@ export default function RootLayout({
         spaceMono.variable
       )}
     >
-      <body>
+      {/* ส่วนขยายเบราว์เซอร์บางตัว (เช่น ColorZilla) เติม attribute ใส่ body
+          ก่อน React hydrate — ปิด warning เฉพาะ attribute ของ body เท่านั้น */}
+      <body suppressHydrationWarning>
         <Suspense
           fallback={<div className="h-[72px] border-b-5 border-foreground bg-background" />}
         >
