@@ -1,4 +1,3 @@
-
 generator client {
   provider = "prisma-client"
   output   = "../generated/prisma"
@@ -8,12 +7,91 @@ datasource db {
   provider = "mysql"
 }
 
-model product {
-  id      Int     @id @default(autoincrement())
-  name    String  @db.VarChar(100)
-  price   Decimal @db.Decimal(10, 0)
-  picture String  @db.VarChar(150)
+// ---------------------------------------------------------------
+// Shop tables — introspected from the `ecommerce` database
+// (`prisma db pull`). Model names are PascalCase for the client;
+// @@map keeps them pointed at the real snake_case tables.
+// ---------------------------------------------------------------
+
+model Category {
+  id       Int       @id @unique(map: "id") @default(autoincrement())
+  name     String?   @db.VarChar(255)
+  products Product[]
+
+  @@map("categories")
 }
+
+model Product {
+  id          Int            @id @unique(map: "id") @default(autoincrement())
+  name        String?        @db.VarChar(255)
+  description String?        @db.Text
+  price       Float?
+  category_id Int?
+  orderItems  OrderItem[]
+  images      ProductImage[]
+  category    Category?      @relation(fields: [category_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "products_ibfk_1")
+
+  @@index([category_id], map: "category_id")
+  @@map("products")
+}
+
+model ProductImage {
+  id         Int       @id @unique(map: "id") @default(autoincrement())
+  product_id Int
+  image_name String    @db.Text
+  created_at DateTime? @default(now()) @db.Timestamp(0)
+  product    Product   @relation(fields: [product_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "product_images_ibfk_1")
+
+  @@index([product_id], map: "product_id")
+  @@map("product_images")
+}
+
+model Customer {
+  id      Int     @id @unique(map: "id") @default(autoincrement())
+  name    String? @db.VarChar(255)
+  address String? @db.VarChar(500)
+  phone   String? @db.VarChar(20)
+  orders  Order[]
+
+  @@map("customers")
+}
+
+model Order {
+  id           Int            @id @unique(map: "id") @default(autoincrement())
+  date         DateTime?      @db.DateTime(0)
+  customer_id  Int?
+  status       orders_status?
+  total_amount Float?
+  orderItems   OrderItem[]
+  customer     Customer?      @relation(fields: [customer_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "orders_ibfk_1")
+
+  @@index([customer_id], map: "customer_id")
+  @@map("orders")
+}
+
+model OrderItem {
+  id         Int     @id @unique(map: "id") @default(autoincrement())
+  order_id   Int
+  product_id Int
+  quantity   Int
+  price      Float
+  order      Order   @relation(fields: [order_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "order_items_ibfk_1")
+  product    Product @relation(fields: [product_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "order_items_ibfk_2")
+
+  @@index([order_id], map: "order_id")
+  @@index([product_id], map: "product_id")
+  @@map("order_items")
+}
+
+enum orders_status {
+  delivered
+  received
+  processing
+}
+
+// ---------------------------------------------------------------
+// Better Auth tables
+// ---------------------------------------------------------------
 
 model User {
   id            String    @id
