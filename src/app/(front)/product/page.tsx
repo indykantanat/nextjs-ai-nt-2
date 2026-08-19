@@ -1,3 +1,5 @@
+import { readdir } from "node:fs/promises";
+import path from "node:path";
 import FeaturesProduct from "@/components/features-product";
 import prisma from "@/lib/prisma";
 import { connection } from "next/server";
@@ -6,18 +8,47 @@ import { connection } from "next/server";
 // See: https://nextjs.org/docs/app/guides/migrating-to-cache-components
 export const instant = false;
 
+const IMAGE_DIR = path.join(process.cwd(), "public", "product-image");
+
+// รูปสินค้าใน DB บางรายการยังไม่มีไฟล์จริงใน public/product-image
+// จึงเช็คก่อนว่ามีไฟล์ไหม ถ้าไม่มีจะ render เป็นบล็อกตัวอักษรแทน
+async function listAvailableImages() {
+  try {
+    return new Set(await readdir(IMAGE_DIR));
+  } catch {
+    return new Set<string>();
+  }
+}
+
 // http://localhost:3000/product
 export default async function ProductPage() {
   await connection(); // signals this is a dynamic route
-  const products = await prisma.product.findMany();
 
-  // แปลง Decimal → number ก่อนส่งให้ Client Component
-  const serializedProducts = products.map((p) => ({
-    ...p,
-    price: Number(p.price), // Decimal → number
-  }))
+  const [products, availableImages] = await Promise.all([
+    prisma.product.findMany({
+      orderBy: { id: "asc" },
+      include: {
+        category: true,
+        images: { orderBy: { id: "asc" }, take: 1 },
+      },
+    }),
+    listAvailableImages(),
+  ]);
 
-  if (products.length === 0) {
+  const items = products.map((p) => {
+    const imageName = p.images[0]?.image_name;
+
+    return {
+      id: p.id,
+      name: p.name ?? "ไม่ระบุชื่อสินค้า",
+      description: p.description,
+      price: Number(p.price ?? 0),
+      category: p.category?.name ?? null,
+      picture: imageName && availableImages.has(imageName) ? imageName : null,
+    };
+  });
+
+  if (items.length === 0) {
     return (
       <div className="mx-auto max-w-(--breakpoint-xl) px-4 py-sp6 sm:px-6 lg:px-8">
         <div className="border-5 border-foreground p-sp5 text-center">
@@ -31,5 +62,5 @@ export default async function ProductPage() {
     );
   }
 
-  return <FeaturesProduct products={serializedProducts} />;
+  return <FeaturesProduct products={items} />;
 }
