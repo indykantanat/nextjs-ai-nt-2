@@ -1,7 +1,6 @@
 'use client'
 
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
-import { Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -20,13 +19,16 @@ export const NavigationSheet = () => {
       </VisuallyHidden>
 
       <SheetTrigger asChild>
-        <Button size="icon" variant="outline">
-          <Menu />
+        <Button size="icon" variant="secondary" aria-label="เปิดเมนู">
+          <span className="font-mono text-[16px] leading-none font-bold">≡</span>
         </Button>
       </SheetTrigger>
-      <SheetContent className="px-6 py-3">
+      <SheetContent className="p-sp3">
         <Logo />
-        <NavMenu className="mt-6 [&>div]:h-full" orientation="vertical" />
+        <NavMenu
+          className="mt-sp4 max-w-none [&>div]:h-full"
+          orientation="vertical"
+        />
       </SheetContent>
     </Sheet>
   );

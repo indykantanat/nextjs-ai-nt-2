@@ -3,7 +3,6 @@
 
 import { Button } from "@/components/ui/button";
 import { useCartStore } from "@/lib/cart-store";
-import { ChevronRight } from "lucide-react";
 
 export default function CartButton({ product }: any) {
   const addItem = useCartStore((state) => state.addItem);   
@@ -18,10 +17,8 @@ export default function CartButton({ product }: any) {
   }
 
   return (
-    <>
-        <Button className="mt-6 shadow-none" onClick={handleAddItem}>
-            หยิบใส่ตะกร้า <ChevronRight />
-        </Button> 
-    </>
+    <Button variant="secondary" className="w-full" onClick={handleAddItem}>
+      หยิบใส่ตะกร้า
+    </Button>
   );
 }

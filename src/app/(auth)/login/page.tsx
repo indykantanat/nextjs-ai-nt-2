@@ -62,15 +62,17 @@ export default function LoginForm() {
   }
 
   return (
-  <div className="min-h-screen flex items-center justify-center">
-    <Card className="w-full sm:max-w-md">
-      <CardHeader>
-        <CardTitle>เข้าสู่ระบบ</CardTitle>
-        <CardDescription>
-          กรอกอีเมลและรหัสผ่านเพื่อเข้าสู่ระบบ
-        </CardDescription>
+  <div className="flex min-h-screen items-center justify-center px-4 py-sp5">
+    <Card variant="elevated" className="w-full gap-0 p-0 sm:max-w-md">
+      <div className="flex items-center justify-between border-b-3 border-foreground bg-foreground px-sp3 py-2">
+        <span className="rb-meta text-background">COSCI / LOGIN</span>
+        <span className="rb-meta text-background">[ 01 ]</span>
+      </div>
+      <CardHeader className="p-sp4 pb-0">
+        <CardTitle className="rb-h3">เข้าสู่ระบบ</CardTitle>
+        <CardDescription>กรอกอีเมลและรหัสผ่านเพื่อเข้าสู่ระบบ</CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="p-sp4">
         <form id="form-login" onSubmit={form.handleSubmit(onSubmit)}>
           <FieldGroup>
             <Controller
@@ -118,13 +120,13 @@ export default function LoginForm() {
           </FieldGroup>
         </form>
       </CardContent>
-      <CardFooter className="flex flex-col gap-3">
-        <Button type="submit" form="form-login" className="w-full">
+      <CardFooter className="flex flex-col gap-3 border-t-3 border-foreground p-sp4">
+        <Button type="submit" form="form-login" size="lg" className="w-full">
           เข้าสู่ระบบ
         </Button>
-        <p className="text-center text-sm text-muted-foreground">
+        <p className="text-center text-[14px] text-muted-foreground">
           ยังไม่มีบัญชี?{" "}
-          <a href="/signup" className="underline underline-offset-4 hover:text-primary">
+          <a href="/signup" className="rb-link">
             สมัครสมาชิก
           </a>
         </p>

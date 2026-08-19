@@ -12,11 +12,11 @@ export default function CountCartItem() {
     setIsMounted(true)
   },[])
 
-  if (!isMounted) return null;
+  if (!isMounted) return <span aria-hidden>&mdash;</span>;
 
   return (
     <>
-      <span>{totalItems}</span>
+      <span>{String(totalItems).padStart(2, "0")}</span>
     </>
   );
 }

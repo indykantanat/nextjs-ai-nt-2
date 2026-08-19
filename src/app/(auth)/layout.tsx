@@ -1,5 +1,10 @@
 import type { Metadata } from "next";
-import { Prompt, Roboto, Lora } from "next/font/google";
+import {
+  Prompt,
+  Work_Sans,
+  Archivo_Black,
+  Space_Mono,
+} from "next/font/google";
 import { cn } from "@/lib/utils";
 import "../globals.css";
 
@@ -7,20 +12,37 @@ import "../globals.css";
 // See: https://nextjs.org/docs/app/guides/migrating-to-cache-components
 export const instant = false;
 
-const loraHeading = Lora({subsets:['latin'],variable:'--font-heading'});
-
-const roboto = Roboto({subsets:['latin'],variable:'--font-sans'});
-
-export const promptFont = Prompt({
-  weight: ['400', '500', '700'],
-  subsets: ['thai'],
-  display: 'swap'
+// Prompt stays as the Thai fallback for every family below.
+const prompt = Prompt({
+  weight: ["400", "500", "600", "700"],
+  subsets: ["thai"],
+  variable: "--font-prompt",
+  display: "swap",
 });
 
+const workSans = Work_Sans({
+  subsets: ["latin"],
+  variable: "--font-work-sans",
+  display: "swap",
+});
+
+const archivoBlack = Archivo_Black({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-archivo-black",
+  display: "swap",
+});
+
+const spaceMono = Space_Mono({
+  weight: ["400", "700"],
+  subsets: ["latin"],
+  variable: "--font-space-mono",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "ระบบ ล็อกอิน",
-  description: "เรียนรู้การเขียน Nex.tjs",
+  description: "เรียนรู้การเขียน Next.js",
 };
 
 export default function AuthLayout({
@@ -31,11 +53,15 @@ export default function AuthLayout({
   return (
     <html
       lang="th"
-      className={cn(promptFont.className, "font-sans", roboto.variable, loraHeading.variable)}
+      className={cn(
+        "font-sans",
+        prompt.variable,
+        workSans.variable,
+        archivoBlack.variable,
+        spaceMono.variable
+      )}
     >
-      <body>
-        {children}
-      </body>
+      <body>{children}</body>
     </html>
   );
 }

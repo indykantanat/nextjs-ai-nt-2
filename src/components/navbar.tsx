@@ -3,8 +3,6 @@ import { Logo } from "@/components/logo";
 import { NavMenu } from "@/components/nav-menu";
 import { NavigationSheet } from "@/components/navigation-sheet";
 import Link from "next/link";
-import { Badge } from "./ui/badge";
-import { ShoppingBasket } from "lucide-react";
 import CountCartItem from "@/app/(front)/components/CountCartItem";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
@@ -16,28 +14,31 @@ const Navbar = async () => {
   });
 
   return (
-    <nav className="h-16 border-b bg-background">
-      <div className="mx-auto flex h-full max-w-(--breakpoint-xl) items-center justify-between px-4 sm:px-6 lg:px-8">
+    <nav className="border-b-5 border-foreground bg-background">
+      <div className="mx-auto flex h-[72px] max-w-(--breakpoint-xl) items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
         <Logo />
 
         {/* Desktop Menu */}
         <NavMenu className="hidden md:block" />
 
-        <Link href="/cart">
-          <Badge className="p-2 text-md">
-            <ShoppingBasket /> <CountCartItem /> ชิ้น
-          </Badge>
-        </Link>
-
         <div className="flex items-center gap-3">
-          
+          <Link
+            href="/cart"
+            className="flex h-11 items-center gap-2 border-3 border-foreground bg-background px-4 font-mono text-[13px] font-bold tracking-[1px] text-foreground uppercase transition-colors duration-75 hover:bg-foreground hover:text-background"
+          >
+            <span>Cart</span>
+            <span className="border-l-3 border-current pl-2">
+              <CountCartItem />
+            </span>
+          </Link>
+
           {
             !session && (
               <>
-                <Button asChild className="hidden sm:inline-flex" variant="outline">
+                <Button asChild className="hidden sm:inline-flex" variant="secondary">
                   <Link href="/login">เข้าสู่ระบบ</Link>
                 </Button>
-                <Button asChild>
+                <Button asChild className="hidden sm:inline-flex">
                   <Link href="/signup">สมัครสมาชิก</Link>
                 </Button>
               </>
@@ -47,10 +48,10 @@ const Navbar = async () => {
           {
             session && (
               <>
-                <div className="flex items-center mr-4">
-                  สวัสดี, {session.user.name}
+                <div className="mr-1 hidden rb-meta text-muted-foreground md:block">
+                  <span className="text-foreground">{session.user.name}</span>
                 </div>
-                <div>
+                <div className="hidden md:block">
                   <LogoutButton />
                 </div>
               </>

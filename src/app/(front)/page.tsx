@@ -6,9 +6,5 @@ export const instant = false;
 
 // http://localhost:3000/
 export default function Home() {
-  return (
-    <div>
-     <Hero />
-    </div>
-  );
+  return <Hero />;
 }
