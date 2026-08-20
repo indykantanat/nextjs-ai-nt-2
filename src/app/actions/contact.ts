@@ -17,11 +17,11 @@ export type ContactFormValues = z.infer<typeof contactSchema>;
 
 export async function sendContactEmail(values: ContactFormValues) {
   try {
-    const validated = contactSchema.parse(values);
-
-    if (validated.honeypot !== "") {
+    if (values.honeypot !== "") {
       return { success: true };
     }
+
+    const validated = contactSchema.parse(values);
 
     const { error } = await resend.emails.send({
       from: process.env.CONTACT_FROM_EMAIL || "onboarding@resend.dev",
