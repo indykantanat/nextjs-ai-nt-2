@@ -29,6 +29,7 @@ jobs:
         uses: anomalyco/opencode/github@latest
         env:
           OLLAMA_API_KEY: ${{ secrets.OLLAMA_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}   # จำเป็นเมื่อใช้ use_github_token: true มิฉะนั้น octokit client จะเป็น undefined ตอนจะ comment กลับ
         with:
-          model: ollama-cloud/gemma4:31b
-          use_github_token: true      # ใช้ GITHUB_TOKEN ของ action สำหรับ comment/push แทน token แยก
+          model: ollama/gemma4:31b-cloud
+          use_github_token: true
