@@ -14,11 +14,11 @@ jobs:
       contains(github.event.comment.body, ' /opencode') ||
       startsWith(github.event.comment.body, '/opencode')
     runs-on: ubuntu-latest
-    permissions:
+    permissions:          # ต้องมี ไม่งั้น comment/แก้โค้ดไม่ได้
       id-token: write
-      contents: read
-      pull-requests: read
-      issues: read
+      contents: write
+      pull-requests: write
+      issues: write
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
@@ -31,3 +31,4 @@ jobs:
           OLLAMA_API_KEY: ${{ secrets.OLLAMA_API_KEY }}
         with:
           model: ollama-cloud/gemma4:31b
+          use_github_token: true      # ใช้ GITHUB_TOKEN ของ action สำหรับ comment/push แทน token แยก
