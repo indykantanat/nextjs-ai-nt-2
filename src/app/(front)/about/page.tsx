@@ -33,7 +33,7 @@ export default function AboutPage() {
         <section className="border-3 border-foreground p-sp4">
           <h3 className="rb-h3">เรื่องราวของเรา</h3>
           <p className="mt-sp3 max-w-[62ch] text-[16px] leading-[1.6]">
-            COSCI E&mdash;Commerce เกิดจากแนวคิดว่าเว็บไซต์ไม่จำเป็นต้องสวยหรู
+            NT E&mdash;Commerce เกิดจากแนวคิดว่าเว็บไซต์ไม่จำเป็นต้องสวยหรู
             แต่ต้องอ่านง่าย ใช้งานได้จริง และตรงไปตรงมา
             เราตัดเงา ตัดมุมโค้ง และตัดของตกแต่งออกทั้งหมด
             เหลือไว้เพียงเส้นขอบหนา ตัวอักษรขนาดใหญ่ และโครงสร้างที่ชัดเจน
