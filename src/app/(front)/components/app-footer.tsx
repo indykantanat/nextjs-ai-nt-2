@@ -17,7 +17,7 @@ export default async function AppFooter() {
     <footer className="border-t-5 border-foreground">
       <div className="mx-auto flex max-w-(--breakpoint-xl) flex-col gap-sp4 px-4 py-sp5 sm:px-6 lg:flex-row lg:items-start lg:justify-between lg:px-8">
         <div>
-          <p className="rb-h3">COSCI</p>
+          <p className="rb-h3">NT</p>
           <p className="mt-sp2 rb-meta text-muted-foreground">
             E&mdash;COMMERCE / BANGKOK TH
           </p>
@@ -43,7 +43,7 @@ export default async function AppFooter() {
       <div className="border-t-3 border-foreground">
         <div className="mx-auto flex max-w-(--breakpoint-xl) flex-wrap items-center justify-between gap-2 px-4 py-3 sm:px-6 lg:px-8">
           <p className="rb-meta">
-            &copy; {new Date().getFullYear()} COSCI
+            &copy; {new Date().getFullYear()} NT
           </p>
           <a href="mailto:codingthailand@gmail.com" className="rb-link font-mono text-[13px]">
             codingthailand@gmail.com
